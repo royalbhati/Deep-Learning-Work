@@ -1,0 +1,57 @@
+We investigate conditional adversarial networks as a general-purpose solution
+to sketch-to-image translation problems. These networks not only learn the
+mapping from input image to output image, but also learn a loss function to
+train this mapping. This makes it possible to apply the same generic approach to
+problems that traditionally would require very different loss formulations. We
+demonstrate that this approach is effective at synthesizing images from sketches
+and facedes.Literature Review
+Generative Adversarial Nets :
+Generative adversarial nets were recently introduced as a novel way to train a
+generative model. They consists of two ‘adversarial’ models: a generative
+model G that captures the data distribution, and a discriminative model D that
+estimates the probability that a sample came from the training data rather than
+G. Both G and D could be a non-linear mapping function, such as a multi-layer
+perceptron. To learn a generator distribution pg over data data x, the generator
+builds a mapping function from a prior noise distribution pz(z) to data space as
+G(z; θg). And the discriminator, D(x; θd), outputs a single scalar representing
+the probability that x came form training data rather than pg. G and D are both
+trained simultaneously: we adjust parameters for G to minimize log(1 − D(G(z))
+and adjust parameters for D to minimize logD(X), as if they are following the
+two-player min-max game with value function V (G, D)
+Conditional Adversarial Nets:
+Generative adversarial nets can be extended to a conditional model if both the
+generator and discriminator are conditioned on some extra information y. y
+could be any kind of auxiliary information, such as class labels or data from
+other modalities. We can perform the conditioning by feeding y into the both
+the discriminator and generator as additional input layer. 2 In the generator the
+prior input noise pz(z), and y are combined in joint hidden representation, and
+the adversarial training framework allows for considerable flexibility in how
+this hidden representation is composed. 1 In the discriminator x and y are
+presented as inputs and to a discriminative function (embodied again by a MLP
+in this case).Objective :
+Given a training set which contains pairs of related images (“A” and “B”), a
+Conditional Adverserial Network model learns how to convert an image of type
+“A” into an image of type “B”, or vice-versa where type A is Sketch in our case
+and type B is an image associated with the sketch and in technical terms we
+learn a loss that tries to classify if the output image is real or fake, while
+simultaneously training a generative model to minimize this loss.
+Method:
+GANs are generative models that learn a mapping from random noise vector z
+to output image y: G : z → y . In contrast, conditional GANs learn a mapping
+from observed image x and random noise vector z, to y: G : {x, z} → y. The
+generator G is trained to produce outputs that cannot be distinguished from
+“real” images by an adversarially trained discrimintor, D, which is trained to do
+as well as possible at detecting the generator’s “fakes”.
+In GAN, we have two neural nets: the generator G(z) and the discriminator
+D(X). Now, as we want to condition those networks with some vector y, the
+easiest way to do it is to feed yy into both networks. Hence, our generator and
+discriminator are now G(z,y) and D(X,y) respectively.
+We can see it with a probabilistic point of view. G(z,y) is modeling the
+distribution of our data, given z and y, that is, our data is generated with this £
+X ∼ G(X|z,y).
+Likewise for the discriminator, now it tries to find discriminating label for X and
+XG, that are modeled with d ∼ D(d|X,y).
+Hence, we could see that both D and G is jointly conditioned to two variables z
+or X and y.Now, the objective function is given by:
+The architecture of CGAN:References:
+
